@@ -12,6 +12,7 @@ define Package/jmuEportalAuth
 	SECTION:=utils
 	CATEGORY:=Utilities
 	TITLE:=jmuEportalAuth
+	DEPENDS:=+curl +libcurl
 	PKGARCH:=all
 endef
 
@@ -34,18 +35,6 @@ endef
 define Package/jmuEportalAuth/install
 	$(INSTALL_DIR) $(1)/bin
 	$(INSTALL_BIN) ./files/root/bin/jmuEportalAuth $(1)/bin/jmuEportalAuth
-endef
-
-define Package/jmuEportalAuth/preinst
-	#!/bin/sh
-	[ -f '/etc/crontabs/root' ] && sed -i '/jmuEportalAuth/d' '/etc/crontabs/root'
-	exit 0
-endef
-
-define Package/jmuEportalAuth/prerm
-	#!/bin/sh
-	[ -f '/etc/crontabs/root' ] && sed -i '/jmuEportalAuth/d' '/etc/crontabs/root'
-	exit 0
 endef
 
 $(eval $(call BuildPackage,jmuEportalAuth))
