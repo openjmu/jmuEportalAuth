@@ -8,7 +8,6 @@ _is_auto_reauth_=0
 config_file="/etc/config/jmuEportalAuth"
 
 # 执行参数变量声明
-param_enable=""
 param_service=""
 param_username=""
 param_password=""
@@ -28,6 +27,7 @@ showHelp() {
     exit 0
 }
 
+# 判断是否已联网
 isOnline() {
     # 已在线时以0结束
     captiveReturnCode=`curl -s -I -m 10 -o /dev/null -s -w %{http_code} ${url_generate_204}`
@@ -36,6 +36,11 @@ isOnline() {
     else
         return 0
     fi
+}
+
+# 显示提示消息并以0终止
+setCrontab() {
+    touch /etc/crontabs/root
 }
 
 # 执行下线动作并以0终止
@@ -107,37 +112,40 @@ startAuth() {
         if [ -n "${loginURL}" ]; then
             authMessage=`curl -s -A "${user_agent}" -e "${loginPageURL}" -b "EPORTAL_COOKIE_USERNAME=; EPORTAL_COOKIE_PASSWORD=; EPORTAL_COOKIE_SERVER=; EPORTAL_COOKIE_SERVER_NAME=; EPORTAL_AUTO_LAND=; EPORTAL_USER_GROUP=%E5%AD%A6%E7%94%9F%E5%8C%85%E6%9C%88; EPORTAL_COOKIE_OPERATORPWD=;" -d "userId=${param_username}&password=${param_password}&service=${service}&queryString=${queryString}&operatorPwd=&operatorUserId=&validcode=&passwordEncrypt=false" -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" -H "Content-Type: application/x-www-form-urlencoded; charset=UTF-8" "${loginURL}" | awk -F , '{print $3}' | awk -F : '{print $2}' | awk -F \" '{print $2}'`
             if [ "${authMessage}" == "" ]; then
-                echo " -- 认证成功。"
+                echo " -- 认证成功"
             else
                 echo " -- ${authMessage}"
             fi
         fi
     elif [ $? == 1 ]; then
-        echo " -- 已在线。"
+        echo " -- 已在线，无需认证."
         exit 0
     fi
 }
 
 # 通过-r参数 读取config自动认证
 retryAuth() {
-	echo " -- 开始重新认证..."
-	param_enable=`uci get jmuEportalAuth.@jmuEportalAuth[0].enable`
-	param_service=`uci get jmuEportalAuth.@jmuEportalAuth[0].services`
-	param_username=`uci get jmuEportalAuth.@jmuEportalAuth[0].username`
-	param_password=`uci get jmuEportalAuth.@jmuEportalAuth[0].password`
+    echo " -- 开始重新认证..."
+    param_service=`sed -n "/option services/p" $config_file | awk -F \' '{print $2}'`
+    param_username=`sed -n "/option username/p" $config_file | awk -F \' '{print $2}'`
+    param_password=`sed -n "/option password/p" $config_file | awk -F \' '{print $2}'`
 
-	if [ "${param_enable}" != "" ] && [ "${param_service}" != "" ] && [ "${param_username}" != "" ] && [ "${param_password}" != "" ] && [ "${_do_nothing_with_login_}" == 0 ]
-	then
-	    startAuth
-	else
-		echo " !! 错误: 未配置认证参数。"
-	fi
+    if [ "${param_service}" != "" ] && [ "${param_username}" != "" ] && [ "${param_password}" != "" ] && [ "${_do_nothing_with_login_}" == 0 ]
+    then
+        startAuth
+    else
+        echo " !! 错误: 未配置认证参数。"
+    fi
 }
 
 # 监听参数传入
-while getopts "rkhs:u:p:" arg
+while getopts "crkhs:u:p:" arg
 do
     case $arg in
+        c)
+            _do_nothing_with_login_=1
+            setCrontab
+            ;;
         r)
             _is_auto_reauth_=1
             retryAuth
@@ -180,7 +188,7 @@ then
 elif [ "${_do_nothing_with_login_}" == 1 ]; then
     exit 0
 elif [ "${_is_relogin_}" == 1 ]; then
-	return
+    return
 else
     showHelp
 fi
