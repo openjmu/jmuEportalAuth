@@ -6,7 +6,7 @@
 This shell developed for JMU's web authentication. By using 'curl' to simulate login/logout (Web authentication has keepalive but we don't need it here).
 
 ## 运行环境？ (Running Environment?)
-脚本以ash运行（也可以以bash运行），可编译为软件包ipk，不限硬件平台。脚本将被放置在OpenWRT路由器的"/bin/"。
+脚本以ash运行（也可以以bash运行），如果配套使用luci界面，必须编译为软件包ipk。不限硬件平台。脚本将被放置在OpenWRT路由器的"/bin/"。
 Script based on shell, run with ash or bash. It can be compiled to normal package without hardware platform limitation. Script will be placed at "/bin/".
 
 ## 如何使用？ (How to use it?)
