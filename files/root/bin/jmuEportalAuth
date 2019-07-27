@@ -16,7 +16,7 @@ param_password=""
 eportal_base="http://210.34.130.210/eportal/"
 
 # 返回204的url，用于判断是否认证成功和获取登录url
-url_generate_204="http://www.v2ex.com/generate_204"
+url_generate_204="http://g.cn/generate_204"
 
 # 使用桌面版UA，防止移动版页面被提供
 user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36"
@@ -49,7 +49,7 @@ doLogout() {
     if [ $? == 0 ]; then
         echo " -- 已下线。"
     elif [ $? == 1 ]; then
-        echo " -- 正在执行下线...过程将持续30-45s"
+        echo " -- 正在执行下线..."
         userIndex=`curl -s -A ${user_agent} -I ${eportal_base}redirectortosuccess.jsp | grep -o 'userIndex=.*'`
         logoutResult=`curl -s -A ${user_agent} -d "${userIndex}" ${eportal_base}InterFace.do?method=logout | awk -F , '{print $2}' | awk -F : '{print $2}' | awk -F \" '{print $2}'`
         echo " -- ${logoutResult}"
