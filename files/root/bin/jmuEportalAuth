@@ -47,7 +47,7 @@ setCrontab() {
 doLogout() {
     isOnline
     if [ $? == 0 ]; then
-        echo " -- 已下线。"
+        echo " -- 已下线 "
     elif [ $? == 1 ]; then
         echo " -- 正在执行下线..."
         userIndex=`curl -s -A ${user_agent} -I ${eportal_base}redirectortosuccess.jsp | grep -o 'userIndex=.*'`
@@ -118,7 +118,7 @@ startAuth() {
             fi
         fi
     elif [ $? == 1 ]; then
-        echo " -- 已在线，无需认证."
+        echo " -- 已在线，无需认证 "
         exit 0
     fi
 }
@@ -134,7 +134,7 @@ retryAuth() {
     then
         startAuth
     else
-        echo " !! 错误: 未配置认证参数。"
+        echo " -- 错误: 未配置认证参数 "
     fi
 }
 
@@ -174,7 +174,7 @@ do
             _do_nothing_with_login_=1
             ;;
         ?)
-            echo " !! 错误: 无效的参数。"
+            echo " -- 错误: 无效的参数 "
             exit 1
             ;;
     esac

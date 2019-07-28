@@ -37,7 +37,7 @@ tar xJf lede-sdk-17.01.6-ar71xx-generic_gcc-5.4.0_musl-1.1.16.Linux-x86_64.tar.x
 # Clone 项目
 cd lede-sdk-17.01.6-ar71xx-generic_gcc-5.4.0_musl-1.1.16.Linux-x86_64
 git clone https://github.com/openjmu/jmuEportalAuth package/luci-app-jmuSupplicant
-# 选择要编译的包 LuCI -> Utilities -> [M]jmuEportalAuth
+# 选择要编译的包 Utilities -> [M]jmuEportalAuth
 make menuconfig
 # 开始编译
 make package/jmuEportalAuth/compile V=99
