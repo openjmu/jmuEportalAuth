@@ -14,7 +14,7 @@ shell方法如下：
 
     Usage (使用方法):
         -h Get help information (获取帮助信息)
-        -k Kill process (WILL GO OFFLINE) (结束进程 会下线)
+        -k Kill process (will go offline) (结束进程，会下线)
 
         -s Service Name (服务名称)
             0(教育网接入) / 1(电信宽带接入) / 2(联通宽带接入) / 3(移动宽带接入)
@@ -36,7 +36,7 @@ wget https://mirrors.tuna.tsinghua.edu.cn/lede/releases/17.01.6/targets/ar71xx/g
 tar xJf lede-sdk-17.01.6-ar71xx-generic_gcc-5.4.0_musl-1.1.16.Linux-x86_64.tar.xz
 # Clone 项目
 cd lede-sdk-17.01.6-ar71xx-generic_gcc-5.4.0_musl-1.1.16.Linux-x86_64
-git clone https://github.com/openjmu/jmuEportalAuth package/luci-app-jmuSupplicant
+git clone https://github.com/openjmu/jmuEportalAuth package/jmuEportalAuth
 # 选择要编译的包 Utilities -> [M]jmuEportalAuth
 make menuconfig
 # 开始编译
