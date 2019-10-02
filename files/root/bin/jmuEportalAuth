@@ -5,7 +5,10 @@ _do_nothing_with_login_=0
 # 判断是否是自动重新登录
 _is_auto_reauth_=0
 
+# OpenWrt/LEDE
 config_file="/etc/config/jmuEportalAuth"
+# Padavan
+# config_file="/etc/storage/jmuEportalAuth.conf"
 
 # 执行参数变量声明
 param_service=""
@@ -23,7 +26,7 @@ user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
 
 # 显示提示消息并以0终止
 showHelp() {
-    echo $'\n  JMU Eportal Authentication\n  集美大学Eportal认证\n\n    Usage (使用方法):\n        -h Get help information (获取帮助信息)\n        -k Kill process (WILL GO OFFLINE) (结束进程 #会下线# )\n\n        -s Service Name (服务名称)\n           0(教育网接入) / 1(电信宽带接入) / 2(联通宽带接入) / 3(移动宽带接入)\n        -u Username (用户名) (工号/学号)\n        -p Password (密码)\n\n        -r Retry authentication with configured (已配置情况下重新认证)\n\n    Example (示例):\n        jmuEportalAuth -h\n        jmuEportalAuth -k\n        jmuEportalAuth -s 1 -u 201500000000 -p 123456\n        jmuEportalAuth -r\n\n    About (关于):\n        Based on https://github.com/LGiki/RuijiePortalLoginTool\n        Modified By alex@jmu.edu.cn\n'
+    echo $'\n  JMU Eportal Authentication\n  集美大学Eportal认证\n\n    Usage (使用方法):\n        -h Get help information (获取帮助信息)\n        -k Kill process (结束进程，会下线)\n\n        -s Service Name (服务名称)\n           0(教育网接入) / 1(电信宽带接入) / 2(联通宽带接入) / 3(移动宽带接入)\n        -u Username (用户名) (工号/学号)\n        -p Password (密码)\n\n        -r Retry authentication with configured (已配置情况下重新认证)\n\n    Example (示例):\n        jmuEportalAuth -h\n        jmuEportalAuth -k\n        jmuEportalAuth -s 1 -u 学号 -p 密码\n        jmuEportalAuth -r\n\n    About (关于):\n        Based on https://github.com/LGiki/RuijiePortalLoginTool\n        Modified By alex@jmu.edu.cn\n'
     exit 0
 }
 
