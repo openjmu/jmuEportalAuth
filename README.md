@@ -29,17 +29,17 @@ shell方法如下：
         jmuEportalAuth -r
 
 ## 补充说明 (PS)
-Padavan也是可以用这个脚本的，需要在/etc/storage里新建一个名为jmuEportalAuth的文件，然后把jmuEportalAuth里面的内容复制过去，再注释掉OpenWrt的```config_file```那一行，并把Padavan的```config_file```那一行前面的注释去掉。
+Padavan也是可以用这个脚本的，需要在/etc/storage里新建一个名为jmuEportalAuth的文件，然后把files/root/bin的jmuEportalAuth里面的内容复制过去，再去掉OpenWrt的```config_file```那一行，并把Padavan的```config_file```那一行前面的注释去掉。
 ```bash
 chmod +x /etc/storage/jmuEportalAuth
 mtd_storage.sh save
-/etc/storage/jmuEportalAuth -s X -u 学号 -p 密码 # X为0/1/2/3
+/etc/storage/jmuEportalAuth -s X -u 学号 -p 密码 #X为0/1/2/3
 mtd_storage.sh save
 ```
 添加计划任务 (Add Crontab)：
 在自定义设置-脚本-自定义 Crontab 定时任务配置那边加上：
 ```bash
-10 6 * * * /etc/storage/jmuEportalAuth -r # 6点10分认证
+10 6 * * * /etc/storage/jmuEportalAuth -r #6点10分认证
 ```
 
 ## 编译 (Make)
