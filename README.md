@@ -5,8 +5,8 @@
 This shell developed for JMU's web authentication. By using 'curl' to simulate login/logout (Web authentication has keepalive but we don't need it here).
 
 ## 运行环境？ (Running Environment?)
-脚本以ash运行（也可以以bash运行），如果配套使用luci界面，必须编译为软件包ipk。脚本将被放置在OpenWRT路由器的"/bin"目录下。
-Script based on shell, run with ash or bash. It can be compiled to normal package without hardware platform limitation. Script will be placed at "/bin".
+脚本以ash运行（也可以以bash运行），如果配套使用luci界面，必须编译为软件包ipk。脚本将被放置在OpenWrt的"/bin"或者Padavan的"/etc/storage"目录下。
+Script based on shell, run with ash or bash. It can be compiled to normal package without hardware platform limitation. Script will be placed at "/bin" or "/etc/storage".
 
 ## 如何使用？ (How to use it?)
 配套luci控制界面[luci-app-jmuEportalAuth](https://github.com/openjmu/luci-app-jmuEportalAuth)。
@@ -14,7 +14,7 @@ shell方法如下：
 
     Usage (使用方法):
         -h Get help information (获取帮助信息)
-        -k Kill process (will go offline) (结束进程，会下线)
+        -k Kill process (结束进程，会下线)
 
         -s Service Name (服务名称)
             0(教育网接入) / 1(电信宽带接入) / 2(联通宽带接入) / 3(移动宽带接入)
@@ -28,6 +28,19 @@ shell方法如下：
         jmuEportalAuth -s 1 -u 学号 -p 密码
         jmuEportalAuth -r
 
+## 补充说明 (PS)
+Padavan也是可以用这个脚本的，需要在/etc/storage里新建一个名为jmuEportalAuth的文件，然后把files/root/bin的jmuEportalAuth里面的内容复制过去，再去掉OpenWrt的```config_file```那一行，并把Padavan的```config_file```那一行前面的注释去掉。
+```bash
+chmod +x /etc/storage/jmuEportalAuth
+mtd_storage.sh save
+/etc/storage/jmuEportalAuth -s X -u 学号 -p 密码 #X为0/1/2/3
+mtd_storage.sh save
+```
+添加计划任务 (Add Crontab)：
+在自定义设置-脚本-自定义 Crontab 定时任务配置那边加上：
+```bash
+10 6 * * * /etc/storage/jmuEportalAuth -r #6点10分认证
+```
 
 ## 编译 (Make)
 ```bash
