@@ -16,7 +16,7 @@ param_username=""
 param_password=""
 
 # eportal的基础url
-eportal_base="http://210.34.130.210/eportal/"
+eportal_base="http://10.8.2.2/eportal/"
 
 # 返回204的url，用于判断是否认证成功和获取登录url
 url_generate_204="http://g.cn/generate_204"
