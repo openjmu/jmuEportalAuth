@@ -9,8 +9,8 @@ PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)
 include $(INCLUDE_DIR)/package.mk
 
 define Package/jmuEportalAuth
-	SECTION:=utils
-	CATEGORY:=Utilities
+	SECTION:=net
+	CATEGORY:=Network
 	TITLE:=jmuEportalAuth
 	DEPENDS:=+curl +libcurl
 	PKGARCH:=all
